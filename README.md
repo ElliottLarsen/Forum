@@ -1,0 +1,5 @@
+# Forum
+
+## Technologies
+* Python
+* FastAPI
