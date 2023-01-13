@@ -5,13 +5,17 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from database import get_db
+from domain.post import post_schema, post_crud
 from models import Post
 
 router = APIRouter(
     prefix="/forum/post"
 )
 
-@router.get("/list")
+@router.get("/list", response_model = list[post_schema.Post])
 def post_list(db: Session = Depends(get_db)):
-    post_list = db.query(Post).order_by(Post.create_date.desc()).all()
+    """
+    Routes to the list of posts.
+    """
+    post_list = post_crud.get_post_list(db)
     return post_list

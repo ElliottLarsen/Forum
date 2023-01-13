@@ -7,6 +7,9 @@ from sqlalchemy.orm import relationship
 from database import Base
 
 class Post(Base):
+    """
+    Represents a Post object.
+    """
     __tablename__ = "post"
 
     id = Column(Integer, primary_key = True)
@@ -15,6 +18,9 @@ class Post(Base):
     create_date = Column(DateTime, nullable = False)
 
 class Comment(Base):
+    """
+    Represents a Comment object.
+    """
     __tablename__ = "comment"
 
     id = Column(Integer, primary_key = True)
