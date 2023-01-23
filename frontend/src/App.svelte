@@ -1,11 +1,10 @@
 <script>
-  let greeting;
+  import Router from 'svelte-spa-router'
+  import Home from './routes/Home.svelte'
 
-  fetch("http://localhost:8000/").then((response) => {
-    response.json().then((json) => {
-      greeting = json.greeting;
-    });
-  });
+  const routes = {
+    '/': Home,
+  }
 </script>
 
-<h1>{greeting}</h1>
+<Router {routes}/>
