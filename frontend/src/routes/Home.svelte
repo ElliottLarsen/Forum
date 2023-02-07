@@ -1,11 +1,12 @@
 <script>
+    import fastapi from "../lib/api"
+    import { link } from "svelte-spa-router"
+
     let post_list = []
   
     function get_post_list() {
-      fetch("http://127.0.0.1:8000/forum/post/list").then((response) => {
-        response.json().then((json) => {
-          post_list = json
-        })
+      fastapi("get", "/forum/post/list", {}, (json) => {
+        post_list = json
       })
     }
   
@@ -14,6 +15,6 @@
   
   <ul>
     {#each post_list as post}
-      <li>{post.subject}</li>
+      <li><a use:link href="/detail/{post.id}">{post.subject}</a></li>
     {/each}
   </ul>
