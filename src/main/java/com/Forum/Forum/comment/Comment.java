@@ -1,7 +1,8 @@
-package com.Forum.Forum;
+package com.Forum.Forum.comment;
 
 import java.time.LocalDateTime;
 
+import com.Forum.Forum.post.Post;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

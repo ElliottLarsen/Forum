@@ -1,8 +1,9 @@
-package com.Forum.Forum;
+package com.Forum.Forum.post;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.Forum.Forum.comment.Comment;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
