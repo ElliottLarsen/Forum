@@ -3,7 +3,7 @@ package com.Forum.Forum.post;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -20,4 +20,12 @@ public class PostController {
         List<Post> postList = this.postService.getPostList();
         return postList;
     }
+
+    @GetMapping(value = "/post/detail/{id}")
+    @ResponseBody
+    public Post postDetail(@PathVariable("id") Integer id) {
+        Post post = this.postService.getPost(id);
+        return post;
+    }
+
 }
