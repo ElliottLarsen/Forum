@@ -12,12 +12,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Controller
 public class PostController {
-    private final PostRepository postRepository;
+    private final PostService postService;
 
     @GetMapping("/post/list")
     @ResponseBody
-    public List<Post> getPostList() {
-        List<Post> postList = this.postRepository.findAll();
+    public List<Post> postList() {
+        List<Post> postList = this.postService.getPostList();
         return postList;
     }
 }
