@@ -3,6 +3,7 @@ package com.Forum.Forum.comment;
 import java.time.LocalDateTime;
 
 import com.Forum.Forum.post.Post;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,6 +27,7 @@ public class Comment {
 
     private LocalDateTime createDate;
 
+    @JsonBackReference
     @ManyToOne
     private Post post;
 }
