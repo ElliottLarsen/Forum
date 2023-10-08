@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+<div class="container my-3">
+  <table class="table">
+    <thead class="table-dark">
+    <tr>
+      <th>#</th>
+      <th>Subject</th>
+      <th>Date/Time</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="post, loop : ${postList}">
+      <td th:text="${loop.count}"></td>
+      <td>
+        <a th:href="@{|/post/detail/${post.id}|}" th:text="${post.subject}"></a>
+      </td>
+      <td th:text="${#temporals.format(post.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

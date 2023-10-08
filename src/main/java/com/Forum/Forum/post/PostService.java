@@ -14,10 +14,10 @@ import org.springframework.data.domain.Pageable;
 public class PostService {
     private final PostRepository postRepository;
 
-    public Page<Post> getPostList(int page) {
+    public List<Post> getPostList() {
 
-        Pageable pageable = PageRequest.of(page, 10);
-        return this.postRepository.findAll(pageable);
+        //Pageable pageable = PageRequest.of(page, 10);
+        return this.postRepository.findAll();
     }
 
     public Post getPost(Integer id) {
