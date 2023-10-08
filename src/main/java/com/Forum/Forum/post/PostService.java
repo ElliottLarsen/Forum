@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import java.util.Optional;
 import com.Forum.Forum.DataNotFoundException;
+import java.time.LocalDateTime;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,8 +15,15 @@ import org.springframework.data.domain.Pageable;
 public class PostService {
     private final PostRepository postRepository;
 
-    public List<Post> getPostList() {
+    public void createPost(String subject, String content) {
+        Post p = new Post();
+        p.setSubject(subject);
+        p.setContent(content);
+        p.setCreateDate(LocalDateTime.now());
+        this.postRepository.save(p);
+    }
 
+    public List<Post> getPostList() {
         //Pageable pageable = PageRequest.of(page, 10);
         return this.postRepository.findAll();
     }

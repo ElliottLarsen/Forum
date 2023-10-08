@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
 import org.springframework.data.domain.Page;
 import lombok.RequiredArgsConstructor;
 
@@ -20,7 +21,19 @@ import java.util.List;
 public class PostController {
     private final PostService postService;
 
-    // TODO: Create PostMapping for posts.
+    @GetMapping("/post/create")
+    public String postCreate(PostCreateForm postCreateForm) {
+        return "post_form";
+    }
+
+    @PostMapping("/post/create")
+    public String postCreate(@Valid PostCreateForm postCreateForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "post_form";
+        }
+        this.postService.createPost(postCreateForm.getSubject(), postCreateForm.getContent());
+        return "redirect:/post/list";
+    }
 
     @GetMapping("/post/list")
     public String postList(Model model) {
