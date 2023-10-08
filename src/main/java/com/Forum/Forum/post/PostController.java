@@ -1,10 +1,9 @@
 package com.Forum.Forum.post;
 
-import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.data.domain.Page;
@@ -27,6 +26,14 @@ public class PostController {
     public Post postDetail(@PathVariable("id") Integer id) {
         Post post = this.postService.getPost(id);
         return post;
+    }
+
+    @PostMapping("/modify/{id}")
+    @ResponseBody
+    public Post postModify(PostUpdateForm postUpdateForm, @PathVariable("id") Integer id) {
+        Post post = this.postService.getPost(id);
+        this.postService.modifyPost(post, postUpdateForm.getSubject(), postUpdateForm.getContent());
+        return this.postService.getPost(id);
     }
 
 }

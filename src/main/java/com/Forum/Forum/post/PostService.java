@@ -28,4 +28,10 @@ public class PostService {
             throw new DataNotFoundException("Post not found.");
         }
     }
+
+    public void modifyPost(Post post, String subject, String content) {
+        post.setSubject(subject);
+        post.setContent(content);
+        this.postRepository.save(post);
+    }
 }
