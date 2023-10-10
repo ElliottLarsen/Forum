@@ -1,17 +1,15 @@
 package com.Forum.Forum.post;
 
 import java.util.List;
-
+import com.Forum.Forum.comment.CommentCreateForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 import jakarta.validation.Valid;
 import org.springframework.validation.BindingResult;
-import org.springframework.data.domain.Page;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -43,7 +41,7 @@ public class PostController {
     }
 
     @GetMapping(value = "/post/detail/{id}")
-    public String postDetail(Model model, @PathVariable("id") Integer id) {
+    public String postDetail(Model model, @PathVariable("id") Integer id, CommentCreateForm commentCreateForm) {
         Post post = this.postService.getPost(id);
         model.addAttribute("post", post);
         return "post_detail";
