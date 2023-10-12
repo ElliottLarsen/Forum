@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import jakarta.validation.Valid;
 import org.springframework.validation.BindingResult;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -34,9 +36,9 @@ public class PostController {
     }
 
     @GetMapping("/post/list")
-    public String postList(Model model) {
-        List<Post> postList = this.postService.getPostList();
-        model.addAttribute("postList", postList);
+    public String postList(Model model, @RequestParam(value="page", defaultValue="0") int page) {
+        Page<Post> paging = this.postService.getPostList(page);
+        model.addAttribute("paging", paging);
         return "post_list";
     }
 
