@@ -3,6 +3,7 @@ package com.Forum.Forum.comment;
 import java.time.LocalDateTime;
 
 import com.Forum.Forum.post.Post;
+import com.Forum.Forum.user.SiteUser;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,4 +31,7 @@ public class Comment {
     @JsonBackReference
     @ManyToOne
     private Post post;
+
+    @ManyToOne
+    private SiteUser author;
 }

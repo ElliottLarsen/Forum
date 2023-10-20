@@ -13,6 +13,10 @@ import org.springframework.validation.BindingResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.data.domain.Page;
+import java.security.Principal;
+import com.Forum.Forum.user.SiteUser;
+import com.Forum.Forum.user.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
@@ -20,18 +24,23 @@ import java.util.List;
 @Controller
 public class PostController {
     private final PostService postService;
+    private final UserService userService;
 
+
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/post/create")
     public String postCreate(PostCreateForm postCreateForm) {
         return "post_form";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/post/create")
-    public String postCreate(@Valid PostCreateForm postCreateForm, BindingResult bindingResult) {
+    public String postCreate(@Valid PostCreateForm postCreateForm, BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()) {
             return "post_form";
         }
-        this.postService.createPost(postCreateForm.getSubject(), postCreateForm.getContent());
+        SiteUser siteUser = this.userService.getUser(principal.getName());
+        this.postService.createPost(postCreateForm.getSubject(), postCreateForm.getContent(), siteUser);
         return "redirect:/post/list";
     }
 

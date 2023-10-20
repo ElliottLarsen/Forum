@@ -1,5 +1,6 @@
 package com.Forum.Forum.post;
 
+import com.Forum.Forum.user.SiteUser;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import java.util.Optional;
@@ -17,11 +18,12 @@ import org.springframework.data.domain.Sort;
 public class PostService {
     private final PostRepository postRepository;
 
-    public void createPost(String subject, String content) {
+    public void createPost(String subject, String content, SiteUser user) {
         Post p = new Post();
         p.setSubject(subject);
         p.setContent(content);
         p.setCreateDate(LocalDateTime.now());
+        p.setAuthor(user);
         this.postRepository.save(p);
     }
 

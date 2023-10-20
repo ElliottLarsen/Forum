@@ -12,6 +12,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
+import com.Forum.Forum.user.SiteUser;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,5 +36,8 @@ public class Post {
     @JsonManagedReference
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comment> commentList;
+
+    @ManyToOne
+    private SiteUser author;
 
 }

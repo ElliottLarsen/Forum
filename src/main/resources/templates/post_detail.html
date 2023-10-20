@@ -7,6 +7,9 @@
             <div class="card-text" style="white-space: pre-line;" th:text="${post.content}"></div>
             <div class="d-flex justify-content-end">
                 <div class="badge bg-light text-dark p-2 text-start">
+                    <div class="mb-2">
+                        <span th:if="${post.author != null}" th:text="${post.author.username}"></span>
+                    </div>
                     <div th:text="${#temporals.format(post.createDate, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
@@ -19,6 +22,9 @@
             <div class="card-text" style="white-space: pre-line;" th:text="${comment.content}"></div>
             <div class="d-flex justify-content-end">
                 <div class="badge bg-light text-dark p-2 text-start">
+                    <div class="mb-2">
+                        <span th:if="${comment.author != null}" th:text="${comment.author.username}"></span>
+                    </div>
                     <div th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
@@ -26,7 +32,8 @@
     </div>
     <form th:action="@{|/comment/create/${post.id}|}" th:object="${commentCreateForm}" method="post" class="my-3">
         <div th:replace="~{form_errors :: formErrorsFragment}"></div>
-        <textarea th:field="*{content}" rows="10" class="form-control"></textarea>
+        <textarea sec:authorize="isAnonymous()" disabled th:field="*{content}" class="form-control" rows="10"></textarea>
+        <textarea sec:authorize="isAuthenticated()" th:field="*{content}" class="form-control" rows="10"></textarea>
         <input type="submit" value="Comment" class="btn btn-primary my-2">
     </form>
 </div>
