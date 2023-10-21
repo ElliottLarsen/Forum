@@ -17,6 +17,8 @@ import java.security.Principal;
 import com.Forum.Forum.user.SiteUser;
 import com.Forum.Forum.user.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -58,18 +60,43 @@ public class PostController {
         return "post_detail";
     }
 
-    @PostMapping("/modify/{id}")
-    public Post postModify(PostUpdateForm postUpdateForm, @PathVariable("id") Integer id) {
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/post/modify/{id}")
+    public String postModify(PostCreateForm postForm, @PathVariable("id") Integer id, Principal principal) {
         Post post = this.postService.getPost(id);
-        this.postService.modifyPost(post, postUpdateForm.getSubject(), postUpdateForm.getContent());
-        return this.postService.getPost(id);
+        if(!post.getAuthor().getUsername().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You are not authorized to edit this.");
+        }
+        postForm.setSubject(post.getSubject());
+        postForm.setContent(post.getContent());
+        return "post_form";
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String postDelete(@PathVariable("id") Integer id) {
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/post/modify/{id}")
+    public String postModify(@Valid PostCreateForm postForm, BindingResult bindingResult,
+                                 Principal principal, @PathVariable("id") Integer id) {
+        System.out.println("HELLO");
+        if (bindingResult.hasErrors()) {
+            return "post_form";
+        }
         Post post = this.postService.getPost(id);
+        if (!post.getAuthor().getUsername().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You are not authorized to edit this.");
+        }
+        this.postService.modify(post, postForm.getSubject(), postForm.getContent());
+        return String.format("redirect:/post/detail/%s", id);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/post/delete/{id}")
+    public String postDelete(Principal principal, @PathVariable("id") Integer id) {
+        Post post = this.postService.getPost(id);
+        if (!post.getAuthor().getUsername().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You are not authorized to delete this.");
+        }
         this.postService.delete(post);
-        return "Delete success.";
+        return "redirect:/post/list";
     }
 
 }
