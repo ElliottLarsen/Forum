@@ -34,17 +34,39 @@ participate in discussions, share their thoughts, and connect with like-minded i
      - Comments can be edited or deleted by the comment owner.
 
 ## GIF Walkthrough
-### User Sign Up, Login, and Logout
+### User Registration and Authentication
 <p>
 <image src = "assets/user.gif" width = 900><br>
 </p>
+
+- Users can register with a username, password, and email.
+- An error message is displayed if the username or email is already in use.
+- An error message is shown if the input strings for password and Password Confirm do not match.
+- During login, an error message is displayed if the login credential is incorrect.
+- Upon successful login, the user is redirected to the main page.
+- Users can log out by clicking the "Log out" button in the navigation bar.
 
 ### Post CRUD Operations
 <p>
 <image src = "assets/PostCRUD.gif" width = 900><br>
 </p>
 
+- When a user creates a post, it displays the username and timestamp.
+- When a user edits a post, it shows the modified date.
+- When a user deletes a post, a confirmation prompt is shown before deletion.
+- Upon successful deletion of the post, the user is redirected to the main page.
+
 ### Comment CRUD Operations
+<p>
+<image src = "assets/CommentCRUD.gif" width = 900><br>
+</p>
+
+- When a user comments on a post, it shows the username and timestamp.
+- When a user edits a comment, it displays the modified date.
+- When a user deletes a comment, a confirmation prompt is shown before deletion.
+- Upon successful deletion of the comment, the initial post is displayed with the comment removed.
+- If the user is not logged in, they can view posts but cannot create comments.
+
 
 ## Contact
 Elliott Larsen
