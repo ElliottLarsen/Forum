@@ -37,11 +37,11 @@ participate in discussions, share their thoughts, and connect with like-minded i
 ### User Sign Up, Login, and Logout
 <p>
 <image src = "assets/user.gif" width = 900><br>
-<p>
+</p>
 
 ### Post CRUD Operations
 <p>
-<image src = "assets/PostCRUD.gif width = 900><br>
+<image src = "assets/PostCRUD.gif" width = 900><br>
 </p>
 
 ### Comment CRUD Operations
