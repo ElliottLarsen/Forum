@@ -34,8 +34,10 @@ participate in discussions, share their thoughts, and connect with like-minded i
      - Comments can be edited or deleted by the comment owner.
 
 ## GIF Walkthrough
-### User Sign Up
-
+### User Sign Up, Login, and Logout
+<p>
+<image src = "assets/user.gif" width = 900><br>
+<p>
 ### Post CRUD Operations
 
 ### Comment CRUD Operations
