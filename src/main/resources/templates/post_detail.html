@@ -52,6 +52,11 @@
                 </div>
             </div>
             <div class="my-3">
+                <a href="javascript:void(0);" class="recommend btn btn-sm btn-outline-secondary"
+                   th:data-uri="@{|/comment/vote/${comment.id}|}">
+                    <3
+                    <span class="badge rounded-pill bg-success" th:text="${#lists.size(comment.voter)}"></span>
+                </a>
                 <a th:href="@{|/comment/modify/${comment.id}|}" class="btn btn-sm btn-outline-secondary"
                    sec:authorize="isAuthenticated()"
                    th:if="${comment.author != null and #authentication.getPrincipal().getUsername() == comment.author.username}"
