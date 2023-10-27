@@ -14,6 +14,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.ManyToOne;
 import com.Forum.Forum.user.SiteUser;
+import java.util.Set;
+import jakarta.persistence.ManyToMany;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -41,5 +43,8 @@ public class Post {
     private SiteUser author;
 
     private LocalDateTime modifyDate;
+
+    @ManyToMany
+    Set<SiteUser> voter;
 
 }

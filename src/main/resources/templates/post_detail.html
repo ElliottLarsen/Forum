@@ -18,6 +18,11 @@
                 </div>
             </div>
             <div class="my-3">
+                <a href="javascript:void(0);" class="recommend btn btn-sm btn-outline-secondary"
+                   th:data-uri="@{|/post/vote/${post.id}|}">
+                    Upvote
+                    <span class="badge rounded-pill bg-success" th:text="${#lists.size(post.voter)}"></span>
+                </a>
                 <a th:href="@{|/post/modify/${post.id}|}" class="btn btn-sm btn-outline-secondary"
                    sec:authorize="isAuthenticated()"
                    th:if="${post.author != null and #authentication.getPrincipal().getUsername() == post.author.username}"
@@ -71,6 +76,14 @@
             element.addEventListener('click', function() {
                 if(confirm("Are you sure you want to delete?")) {
                     location.href = this.dataset.uri;
+                };
+            });
+        });
+        const recommend_elements = document.getElementsByClassName("recommend");
+        Array.from(recommend_elements).forEach(function(element) {
+        element.addEventListener('click', function() {
+            if(confirm("Would you like to upvote this post?")) {
+                location.href = this.dataset.uri;
                 };
             });
         });
