@@ -35,8 +35,10 @@ public class CommentController {
             model.addAttribute("post", post);
             return "post_detail";
         }
-        this.commentService.create(post, commentCreateForm.getContent(), siteUser);
-        return String.format("redirect:/post/detail/%s", id);
+        Comment comment = this.commentService.create(post,
+                commentCreateForm.getContent(), siteUser);
+        return String.format("redirect:/post/detail/%s#comment_%s",
+                comment.getPost().getId(), comment.getId());
     }
 
     @PreAuthorize("isAuthenticated()")
