@@ -1,5 +1,13 @@
 package com.Forum.Forum.post;
 
+import com.Forum.Forum.comment.Comment;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+import org.springframework.data.jpa.domain.Specification;
 import com.Forum.Forum.user.SiteUser;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +25,24 @@ import org.springframework.data.domain.Sort;
 @Service
 public class PostService {
     private final PostRepository postRepository;
+
+    private Specification<Post> search(String kw) {
+        return new Specification<>() {
+            private static final long serialVersionUID = 1L;
+            @Override
+            public Predicate toPredicate(Root<Post> p, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                query.distinct(true);
+                Join<Post, SiteUser> u1 = p.join("author", JoinType.LEFT);
+                Join<Post, Comment> a = p.join("commentList", JoinType.LEFT);
+                Join<Comment, SiteUser> u2 = a.join("author", JoinType.LEFT);
+                return cb.or(cb.like(p.get("subject"), "%" + kw + "%"),
+                        cb.like(p.get("content"), "%" + kw + "%"),
+                        cb.like(u1.get("username"), "%" + kw + "%"),
+                        cb.like(a.get("content"), "%" + kw + "%"),
+                        cb.like(u2.get("username"), "%" + kw + "%"));
+            }
+        };
+    }
 
     public void createPost(String subject, String content, SiteUser user) {
         Post p = new Post();
