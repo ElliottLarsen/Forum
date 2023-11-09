@@ -53,11 +53,12 @@ public class PostService {
         this.postRepository.save(p);
     }
 
-    public Page<Post> getPostList(int page) {
+    public Page<Post> getPostList(int page, String kw) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
-        return this.postRepository.findAll(pageable);
+        Specification<Post> spec = search(kw);
+        return this.postRepository.findAll(spec, pageable);
     }
 
     public Post getPost(Integer id) {
